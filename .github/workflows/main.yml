@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - "docs/**"
       - ".vscode/**"
@@ -12,7 +12,7 @@ on:
       - "**/*.md"
   pull_request:
     branches:
-      - master
+      - main
   release:
     types:
       - released
@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [windows-latest]
     outputs:
       name: ${{ steps.set-version.outputs.name }}
       version: ${{ steps.set-version.outputs.version }}
@@ -99,12 +99,12 @@ jobs:
           files: ${{ needs.build.outputs.name }}.vsix
   publish:
     needs: build
-    if: github.event_name == 'release' && needs.build.outputs.taggedbranch == 'master'
+    if: github.event_name == 'release' && needs.build.outputs.taggedbranch == 'main'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: master
+          ref: main
           token: ${{ secrets.TOKEN }}
       - name: Use Node.js
         uses: actions/setup-node@v3
