@@ -1,0 +1,9 @@
+**
+!dist/*.js
+!dist/*.txt
+!images/*.svg
+!images/*.png
+!CHANGELOG.md
+!LICENSE
+!README.md
+!package.json

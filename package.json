@@ -1,0 +1,67 @@
+{
+  "name": "viewcontainer",
+  "displayName": "InterSystems View Container",
+  "version": "1.0.0-SNAPSHOT",
+  "publisher": "intersystems-community",
+  "description": "Provides a View Container used by other InterSystems extensions.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/intersystems-community/vscode-intersystems-viewcontainer"
+  },
+  "license": "MIT",
+  "keywords": [
+    "intersystems"
+  ],
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "icon": "images/logo.png",
+  "categories": [
+    "Other"
+  ],
+  "contributors": [
+    {
+      "name": "John Murray",
+      "email": "johnm@georgejames.com"
+    }
+  ],
+  "private": true,
+  "scripts": {
+    "vscode:prepublish": "webpack --mode production --devtool hidden-source-map",
+    "webpack": "npm run clean && webpack --mode development",
+    "webpack-dev": "npm run clean && webpack --mode development --watch",
+    "clean": "rimraf dist",
+    "package": "vsce package",
+    "compile": "webpack --mode production && tsc -p ./",
+    "watch": "tsc -w -p ./tsconfig.json",
+    "lint": "node ./node_modules/tslint/bin/tslint --project tsconfig.json -t verbose",
+    "lint-fix": "tslint --project tsconfig.json -t verbose --fix",
+    "open-in-browser": "vscode-test-web --extensionDevelopmentPath=. ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "1.93.0",
+    "@vscode/test-web": "^0.0.67",
+    "rimraf": "^5.0.5",
+    "ts-loader": "^9.5.1",
+    "tslint": "^5.20.1",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "main": "./dist/extension",
+  "browser": "./dist/web-extension",
+  "activationEvents": [
+  ],
+  "contributes": {
+
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "intersystems-community",
+          "title": "InterSystems",
+          "icon": "images/InterSystems.svg"
+        }
+      ]
+    }
+  }
+}
