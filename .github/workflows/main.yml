@@ -19,10 +19,7 @@ on:
 jobs:
   build:
     timeout-minutes: 10
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
+    runs-on: ubuntu-latest
     outputs:
       name: ${{ steps.set-version.outputs.name }}
       version: ${{ steps.set-version.outputs.version }}
@@ -32,7 +29,7 @@ jobs:
       - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Find which branch the release tag points at
         id: find-branch
-        if: github.event_name == 'release' && runner.os == 'Windows'
+        if: github.event_name == 'release'
         shell: bash
         run: |
           git fetch --depth=1 origin +refs/heads/*:refs/heads/*
@@ -41,7 +38,6 @@ jobs:
           echo "taggedbranch=$TAGGEDBRANCH" >> $GITHUB_OUTPUT
       - name: Set an output
         id: set-version
-        if: runner.os == 'Windows'
         shell: bash
         run: |
           set -x
@@ -72,11 +68,10 @@ jobs:
         with:
           run: npm run test
       - name: Build package
-        if: runner.os == 'Windows'
         run: |
           npx vsce package -o ${{ steps.set-version.outputs.name }}.vsix
       - uses: actions/upload-artifact@v4.4.2
-        if: (runner.os == 'Windows') && (github.event_name != 'release')
+        if: (github.event_name != 'release')
         with:
           name: ${{ steps.set-version.outputs.name }}.vsix
           path: ${{ steps.set-version.outputs.name }}.vsix
