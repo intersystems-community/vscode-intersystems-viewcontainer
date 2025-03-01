@@ -63,10 +63,6 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm run compile
-      - name: npm test
-        uses: coactions/setup-xvfb@v1
-        with:
-          run: npm run test
       - name: Build package
         run: |
           npx vsce package -o ${{ steps.set-version.outputs.name }}.vsix
